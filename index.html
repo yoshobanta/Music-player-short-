@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHO MUSIC PLAYER</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/71f68437e2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-arrow-left "></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+            <img src="/media/man-7628305_1280.jpg" class="songImg">
+            <h1>Beast</h1>
+            <p>Pabilio Yosho</p>
+            <audio  id="songs">
+                <source src="/media/the-best-jazz-club-in-new-orleans-164472.mp3" type="audio/mpeg">            
+                <!-- can use mp3 but older browser will not recogonise it how ever most mordern web browser will do -->
+            </audio>
+            <!-- <input type="range" id="progress"> -->
+            <input type="range" id="progress">
+            
+            <div class="controls">
+                <div><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrButton"></i></div>
+                <div><i class="fa-solid fa-forward"></i></div>
+            </div>
+        </div>
+    </div>
+<script>
+    let progress = document.getElementById("progress");
+    let song = document.getElementById("songs");
+    let ctrv = document.getElementById("ctrButton");
+
+    song.onloadedmetadata = function(){
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+}
+
+    // fa-play  is replaced by fa-pause go to fontawsome check both play and pause btn the only diff is fa-play/pause
+    function playPause() {
+    if (ctrv.classList.contains("fa-pause")){
+        song.pause();
+        ctrv.classList.remove("fa-pause");
+        ctrv.classList.add("fa-play");
+    }
+    else{
+        song.play();
+        ctrv.classList.remove("fa-play");
+        ctrv.classList.add("fa-pause");
+    }
+}
+if (song.play()){
+    setInterval(()=>{
+        progress.value = song.currentTime;
+    },500);
+}
+
+progress.onchange = function(){
+    song.play();
+    song.currentTime=progress.value;
+    ctrButton.classList.remove("fa-play");
+    ctrButton.classList.add("fa-pause");
+}
+
+</script>
+</body>
+</html>
